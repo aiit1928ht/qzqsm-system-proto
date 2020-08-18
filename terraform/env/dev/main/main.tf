@@ -57,20 +57,12 @@ resource "aws_security_group" "ec2" {
   name        = "ec2"
   vpc_id      = aws_vpc.qzqsm-system-proto.id
 
-  ingress {
-    description = "home"
+    ingress {
+    description = "internal"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["223.134.247.32/32"]
-  }
-
-    ingress {
-    description = "pbl"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [aws_vpc.qzqsm-system-proto.cidr_block]
   }
 
   egress {
@@ -87,7 +79,6 @@ resource "aws_eip" "qzqsm" {
 
 resource "aws_key_pair" "main" {
   key_name   = "aws-qzqsm-key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7VjTU93iZLvFVTRAJqf8fylM1I6MDhfgnkTcEdIkVixGNu7saiXcyOX+b25r1T6UpqJG46TQfPOPwLwe2hD0/JKDgirHzQYD3Gf4b8ILnqiQSD8ujx5E7iaY5rnHBTqlx9DmQ4hVgoSYALBSdnLl1LPV40HXSEAUUHePFW+GPnmskTq25JoeB7BH8+EBcjLsDSQcuAEVorQR4fQBDALYxQGOtOJSAB6CY+iKsZve1rGx2BYHkCbg/S80M+qRJDPZukfcRhUla4ZGxl/d/21gRP0Te5QZFlUJJaK8G6DsPLKgKuLwM898QAj79Yj04d4xC5tbZ2zkyRi6Nr1QYOgvpqqB3KzO4nZwIC3lS56CpYRVeXfdyQx5uBbhdUF50a4PlCIQHxZOreA955yecoknam78NX7yxsxdM83ogQOP5o6OgJRS3moNESSQbDEwJ1mKONjGEo9WxY7XQ9oZQDtqYkW9JnII8W7HoM1j+64morc7rUlJbpU0Lb7aDjrfrIZiB2VilDBLw13ehw10JO7j02KSVJ5XIjyhoHjbcCqGo8t9lk1eA44pP+JO05f3+hFwqXdqSolZpdC2eUHZQbn2JBpT0vD9kDeKCPK1iU5zQsK444BEI/LbSBNj+TMSZez/l6kLLsQFV3x/5hmPQwF5yICH54k7oU8hYjl1eIAToQw== hiro6t@h-sh3i0x-2.local"
 }
 
 /*
@@ -117,9 +108,9 @@ resource "aws_db_instance" "qzqsmdb" {
   engine               = "postgres"
   engine_version       = "10.9"
   instance_class       = "db.t3.micro"
-  name                 = "qzqsmdb"
   availability_zone    = "us-east-1c"
   publicly_accessible  = true
   skip_final_snapshot = true
   db_subnet_group_name = aws_db_subnet_group.main.name
+//  security_group_names = ["${aws_security_group.ec2.id}"]
 }
