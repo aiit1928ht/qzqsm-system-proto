@@ -1,0 +1,24 @@
+---
+- name: Enable to install OpenJDK 11.
+  command: "amazon-linux-extras enable java-openjdk11"
+  become: yes
+
+- name: Install OpenJDK 11.
+  yum: 
+    name: java-11-openjdk
+
+- name: Install Postgresql client
+  yum:
+    name: postgresql.x86_64
+
+- name: mkdir for JDBC driver
+  file:
+    state: directory
+    path: /usr/local/share/java
+    mode: 0755
+
+- name: wget JDBC for Postgre
+  get_url:
+    url: https://jdbc.postgresql.org/download/postgresql-42.2.14.jar
+    dest: /usr/local/share/java/
+    mode: 0755

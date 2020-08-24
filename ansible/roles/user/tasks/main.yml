@@ -1,0 +1,131 @@
+---
+- name: group qzqsm
+  group: name=qzqsm
+
+- name: nakazaki
+  user: 
+    name: nakazaki
+    group: qzqsm
+    groups: wheel
+    shell: /bin/bash
+  
+- name: hora
+  user: 
+    name: hora
+    group: qzqsm
+    groups: wheel
+    shell: /bin/bash
+
+- name: hirono
+  user: 
+    name: hirono
+    group: qzqsm
+    groups: wheel
+    shell: /bin/bash
+
+- name: sato
+  user: 
+    name: sato
+    group: qzqsm
+    groups: wheel
+    shell: /bin/bash
+
+- name: send bash_profile to hora
+  copy:
+    src: /Users/hiro6t/dev/aiit/pbl2020/qzqsm-system-proto/ansible/roles/user/files/.bash_profile
+    dest: /home/hora
+    owner: hora
+    group: qzqsm
+    mode: 0644
+    
+- name: send bash_profile to sato
+  copy:
+    src: /Users/hiro6t/dev/aiit/pbl2020/qzqsm-system-proto/ansible/roles/user/files/.bash_profile
+    dest: /home/sato
+    owner: sato
+    group: qzqsm
+    mode: 0644
+
+- name: send bash_profile to nakazaki
+  copy:
+    src: /Users/hiro6t/dev/aiit/pbl2020/qzqsm-system-proto/ansible/roles/user/files/.bash_profile
+    dest: /home/nakazaki
+    owner: nakazaki
+    group: qzqsm
+    mode: 0644
+
+- name: send bash_profile to hirono
+  copy:
+    src: /Users/hiro6t/dev/aiit/pbl2020/qzqsm-system-proto/ansible/roles/user/files/.bash_profile
+    dest: /home/hirono
+    owner: hirono
+    group: qzqsm
+    mode: 0644
+
+- name: mkdir .ssh for hirono
+  file:
+    state: directory
+    path: /home/hirono/.ssh
+    owner: hirono
+    group: qzqsm
+    mode: 0700
+
+- name: mkdir .ssh for hora
+  file:
+    state: directory
+    path: /home/hora/.ssh
+    owner: hora
+    group: qzqsm
+    mode: 0700
+
+- name: mkdir .ssh for nakazaki
+  file:
+    state: directory
+    path: /home/nakazaki/.ssh
+    owner: nakazaki
+    group: qzqsm
+    mode: 0700
+
+- name: mkdir .ssh for sato
+  file:
+    state: directory
+    path: /home/sato/.ssh
+    owner: sato
+    group: qzqsm
+    mode: 0700
+
+- name: send public_key to hirono
+  copy:
+    remote_src: yes
+    src: /home/ec2-user/.ssh/authorized_keys
+    dest: /home/hirono/
+    owner: hirono
+    group: qzqsm
+    mode: 0600
+
+- name: send public_key to hora
+  copy:
+    remote_src: yes
+    src: /home/ec2-user/.ssh/authorized_keys
+    dest: /home/hora/
+    owner: hora
+    group: qzqsm
+    mode: 0600
+
+- name: send public_key to sato
+  copy:
+    remote_src: yes
+    src: /home/ec2-user/.ssh/authorized_keys
+    dest: /home/sato/
+    owner: sato
+    group: qzqsm
+    mode: 0600
+
+- name: send public_key to nakazaki
+  copy:
+    remote_src: yes
+    src: /home/ec2-user/.ssh/authorized_keys
+    dest: /home/nakazaki/
+    owner: nakazaki
+    group: qzqsm
+    mode: 0600
