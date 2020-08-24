@@ -34,4 +34,7 @@ build/
 terraform/env/dev/main/.terraform
 terraform/env/dev/main/terraform.tfstate
 terraform/env/dev/main/terraform.tfstate.backup
+terraform/env/normal/main/.terraform
+terraform/env/normal/main/terraform.tfstate
+terraform/env/normal/main/terraform.tfstate.backup
 
